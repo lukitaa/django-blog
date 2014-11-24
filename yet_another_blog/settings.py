@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # My Apps
-    ยก'django_markdown',
+    ก'django_markdown',
     'blog',
 )
 
