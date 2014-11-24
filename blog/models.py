@@ -12,7 +12,7 @@ class Article(models.Model):
     )
     text = models.TextField(
         help_text='The text of the article (in Markdown)',
-    ),
+    )
     created = models.DateField(
         auto_now_add=True,
     )
