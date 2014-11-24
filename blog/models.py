@@ -7,10 +7,18 @@ class Article(models.Model):
     Attributes of a blog post
     '''
 
-    title = models.CharField(max_length=100)
-    text = models.TextField,
-    created = models.DateField(auto_now_add=True)
-    modified = models.DateField(auto_now=True)
+    title = models.CharField(
+        max_length=100,
+    )
+    text = models.TextField(
+        help_text='The text of the article (in Markdown)',
+    ),
+    created = models.DateField(
+        auto_now_add=True,
+    )
+    modified = models.DateField(
+        auto_now=True,
+    )
     author = models.ForeignKey(
         User,
         help_text='The author of the article.',
