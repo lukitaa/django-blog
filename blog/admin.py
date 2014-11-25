@@ -1,5 +1,8 @@
 from django.contrib import admin
-from django_markdown.admin import MarkdownModelAdmin
 from blog.models import Article
+from blog.forms import ArticleForm
 
-admin.site.register(Article, MarkdownModelAdmin)
+class ArticleAdmin(admin.ModelAdmin):
+    form = ArticleForm
+
+admin.site.register(Article, ArticleAdmin)
