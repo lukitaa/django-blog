@@ -1,0 +1,9 @@
+{% if latest_article_list %}
+  <ol>
+ {% for article in latest_article_list %}
+   <li>{{ article }}</li>
+ {% endfor %}
+  </ol>
+{% else %}
+  <p>No articles were found.</p>
+{% endif %}
