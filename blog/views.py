@@ -7,8 +7,7 @@ from blog.models import Article
 
 
 class IndexView(generic.ListView):
-    template_name = 'blog/index.html'
-    context_object_name = 'latest_article_list'
+#    template_name = 'blog/index.html'
 
     def get_queryset(self):
         '''
@@ -19,7 +18,6 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Article
-    template_name = 'blog/detail.html'
 
 
 def comment(request, article_id):
