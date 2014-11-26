@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 
 from blog.models import Article
@@ -13,23 +13,17 @@ def index(request):
     return render(request, 'blog/index.html', context)
 
 def detail(request, article_id):
-    try:
-        article = Article.objects.get(pk=article_id)
-        context = { 'article': article }
-    except Article.DoesNotExist:
-        raise Http404
-
+    article = get_object_or_404(Article, pk=article_id)
+    context = { 'article': article }
     return render(request, 'blog/detail.html', context)
 
 def comment(request, article_id):
-    try:
-        article = Article.objects.get(pk=article_id)
-        # Create comment
-        article.comment_set.create(
-            text=request.POST['text'], 
-            commenter=request.POST['commenter']
-        )
-    except Article.DoesNotExist:
-        raise Http404
+    article = get_object_or_404(Article, pk=article_id)
+    # Create comment
+    #TODO: catch exceptions
+    article.comment_set.create(
+        text=request.POST['text'], 
+        commenter=request.POST['commenter']
+    )
 
     return HttpResponseRedirect(reverse('blog:detail', args=[article.id]))
