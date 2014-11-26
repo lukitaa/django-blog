@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 
 class Article(models.Model):
@@ -29,6 +30,10 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+#        return '/%i' % self.id
+        return reverse('blog:detail', args=[self.id])
+
     class Meta:
         ordering = ('-created',)
 
@@ -51,7 +56,7 @@ class Comment(models.Model):
     article = models.ForeignKey(Article)
 
     def __str__(self):
-        return 'By ' + commenter +  ' at ' + created
+        return 'By ' + self.commenter +  ' at ' + str(self.created)
 
     class Meta:
         ordering = ('-created',)

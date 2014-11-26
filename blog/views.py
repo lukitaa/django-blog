@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from blog.models import Article
 
@@ -19,3 +19,16 @@ def detail(request, article_id):
         raise Http404
 
     return render(request, 'blog/detail.html', context)
+
+def comment(request, article_id):
+    try:
+        article = Article.objects.get(pk=article_id)
+        # Create comment
+        article.comment_set.create(
+            text=request.POST['text'], 
+            commenter=request.POST['commenter']
+        )
+    except Article.DoesNotExist:
+        raise Http404
+
+    return redirect(article)

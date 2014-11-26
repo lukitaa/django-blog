@@ -1,3 +1,19 @@
 <h1>{{ article }}</h1>
 <p>{{ article.text }}</p>
+
+<h2>Comments:</h2>
+<ol>
+{% for comment in article.comment_set.all %}
+  <li>{{ comment.text }} - {{ comment }}</li>
+{% endfor %}
+</ol>
+
+<h2>Add a comment</h2>
+<form action="{% url 'blog:comment' article.id %}" method="post">
+{% csrf_token %}
+  <input type="text" name="text" placeholder="Enter a comment">
+  <input type="input" name="commenter" placeholder="yo!">
+  <input type="submit" value="Comment">
+</form>
+
 <a href="{% url 'blog:index' %}">Go back</a>
