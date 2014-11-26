@@ -1,21 +1,26 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
+from django.views import generic
 
 from blog.models import Article
 
 
-def index(request):
-    latest_article_list = Article.objects.order_by('-created')[:3]
-    context = {
-        'latest_article_list': latest_article_list,
-    }
-    return render(request, 'blog/index.html', context)
+class IndexView(generic.ListView):
+    template_name = 'blog/index.html'
+    context_object_name = 'latest_article_list'
 
-def detail(request, article_id):
-    article = get_object_or_404(Article, pk=article_id)
-    context = { 'article': article }
-    return render(request, 'blog/detail.html', context)
+    def get_queryset(self):
+        '''
+        Return the last five articles.
+        '''
+        return Article.objects.order_by('-created')[:5]
+
+
+class DetailView(generic.DetailView):
+    model = Article
+    template_name = 'blog/detail.html'
+
 
 def comment(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
