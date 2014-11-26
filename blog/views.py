@@ -1,5 +1,6 @@
-from django.http import Http404
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.core.urlresolvers import reverse
 
 from blog.models import Article
 
@@ -31,4 +32,4 @@ def comment(request, article_id):
     except Article.DoesNotExist:
         raise Http404
 
-    return redirect(article)
+    return HttpResponseRedirect(reverse('blog:detail', args=[article.id]))
